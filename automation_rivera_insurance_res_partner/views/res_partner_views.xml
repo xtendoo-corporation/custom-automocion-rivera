@@ -19,7 +19,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_tree"/>
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="inside">
+            <xpath expr="//list" position="inside">
                 <field name="is_insurance_company" optional="hide"/>
             </xpath>
         </field>
@@ -42,4 +42,3 @@
         </field>
     </record>
 </odoo>
-
