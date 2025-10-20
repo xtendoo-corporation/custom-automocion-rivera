@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_fsm_root" name="Órdenes de Trabajo" sequence="10"/>
+    <menuitem id="menu_fsm_order" name="Órdenes de Trabajo" parent="menu_fsm_root" action="action_fsm_order_tree" sequence="20"/>
+</odoo>
+
