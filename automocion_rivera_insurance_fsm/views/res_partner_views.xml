@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extender vista de formulario de contactos -->
+    <record id="view_partner_form_insurance" model="ir.ui.view">
+        <field name="name">res.partner.form.insurance</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_type']" position="after">
+                <field name="is_insurance"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Filtro de búsqueda para aseguradoras -->
+    <record id="view_partner_search_insurance" model="ir.ui.view">
+        <field name="name">res.partner.search.insurance</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='supplier']" position="after">
+                <separator/>
+                <filter name="insurance" string="Aseguradoras"
+                        domain="[('is_insurance', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extender vista de formulario de órdenes FSM -->
+    <record id="view_fsm_order_form_insurance" model="ir.ui.view">
+        <field name="name">fsm.order.form.insurance</field>
+        <field name="model">fsm.order</field>
+        <field name="inherit_id" ref="xtendoo_fsm.view_xtendoo_fsm_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Añadir campos después del cliente -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="currency_id" invisible="1"/>
+                <field name="insurance_partner_id"
+                       options="{'no_create': True, 'no_create_edit': True}"
+                       placeholder="Seleccionar aseguradora..."/>
+                <field name="franchise_amount"
+                       invisible="insurance_partner_id == False"
+                       required="insurance_partner_id != False"
+                       placeholder="0.00"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extender vista de árbol para mostrar aseguradora -->
+    <record id="view_fsm_order_tree_insurance" model="ir.ui.view">
+        <field name="name">fsm.order.tree.insurance</field>
+        <field name="model">fsm.order</field>
+        <field name="inherit_id" ref="xtendoo_fsm.view_xtendoo_fsm_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="insurance_partner_id" optional="hide"/>
+                <field name="franchise_amount" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extender vista de búsqueda para añadir filtros de seguro -->
+    <record id="view_fsm_order_search_insurance" model="ir.ui.view">
+        <field name="name">fsm.order.search.insurance</field>
+        <field name="model">fsm.order</field>
+        <field name="inherit_id" ref="xtendoo_fsm.view_xtendoo_fsm_order_search"/>
+        <field name="arch" type="xml">
+            <!-- Añadir campo de búsqueda para aseguradora -->
+            <field name="stage_id" position="after">
+                <field name="insurance_partner_id" string="Aseguradora"/>
+            </field>
+
+            <!-- Añadir filtros específicos de seguro -->
+            <filter name="open" position="after">
+                <separator/>
+                <filter name="with_insurance" string="Con Seguro"
+                        domain="[('insurance_partner_id', '!=', False)]"/>
+                <filter name="without_insurance" string="Sin Seguro"
+                        domain="[('insurance_partner_id', '=', False)]"/>
+            </filter>
+
+            <!-- Añadir agrupación por aseguradora -->
+            <filter name="group_partner" position="after">
+                <filter string="Aseguradora" name="group_insurance"
+                        context="{'group_by': 'insurance_partner_id'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>
+

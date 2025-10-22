@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extender vista de formulario de pedidos de venta -->
+    <record id="view_order_form_insurance" model="ir.ui.view">
+        <field name="name">sale.order.form.insurance</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Añadir página de Seguro -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Seguro" name="insurance"
+                      invisible="insurance_partner_id == False">
+                    <group>
+                        <group>
+                            <field name="insurance_partner_id"
+                                   options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="franchise_amount"
+                                   required="insurance_partner_id != False"/>
+                        </group>
+                        <group>
+                            <field name="has_insurance_split" readonly="1"/>
+                        </group>
+                    </group>
+                    <group invisible="has_insurance_split == False">
+                        <div class="alert alert-info" role="alert">
+                            <strong>Facturación dividida:</strong>
+                            <p>Este pedido se facturará en dos partes:</p>
+                            <ul>
+                                <li>Una factura al cliente por la franquicia</li>
+                                <li>Una factura a la aseguradora por el resto</li>
+                            </ul>
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+
+            <!-- Añadir campos invisibles para usarlos en conditions -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="insurance_partner_id" invisible="1"/>
+                <field name="has_insurance_split" invisible="1"/>
+            </xpath>
+
+            <!-- Añadir badge visual cuando hay facturación dividida -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button"
+                        icon="fa-shield"
+                        invisible="has_insurance_split == False"
+                        type="object"
+                        name="action_view_insurance_info">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Facturación</span>
+                        <span class="o_stat_text">Dividida</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extender vista de árbol -->
+    <record id="view_order_tree_insurance" model="ir.ui.view">
+        <field name="name">sale.order.tree.insurance</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="insurance_partner_id" optional="hide"/>
+                <field name="franchise_amount" optional="hide"/>
+                <field name="has_insurance_split" optional="hide" widget="boolean"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Filtro de búsqueda -->
+    <record id="view_sales_order_filter_insurance" model="ir.ui.view">
+        <field name="name">sale.order.search.insurance</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter name="with_insurance" string="Con Seguro"
+                        domain="[('insurance_partner_id', '!=', False)]"/>
+                <filter name="insurance_split" string="Facturación Dividida"
+                        domain="[('has_insurance_split', '=', True)]"/>
+                <group expand="0" string="Agrupar Por">
+                    <filter string="Aseguradora" name="group_insurance"
+                            context="{'group_by': 'insurance_partner_id'}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

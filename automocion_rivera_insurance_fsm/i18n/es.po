@@ -1,0 +1,555 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * automocion_rivera_insurance_fsm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-22 12:00+0000\n"
+"PO-Revision-Date: 2025-01-22 12:00+0000\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,field_description:automocion_rivera_insurance_fsm.field_res_partner__is_insurance
+msgid "Es aseguradora"
+msgstr "Es aseguradora"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,help:automocion_rivera_insurance_fsm.field_res_partner__is_insurance
+msgid "Marque esta casilla si este contacto es una compañía aseguradora"
+msgstr "Marque esta casilla si este contacto es una compañía aseguradora"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_partner_search_insurance
+msgid "Aseguradoras"
+msgstr "Aseguradoras"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,field_description:automocion_rivera_insurance_fsm.field_fsm_order__insurance_partner_id
+#: model:ir.model.fields,field_description:automocion_rivera_insurance_fsm.field_sale_order__insurance_partner_id
+msgid "Compañía aseguradora"
+msgstr "Compañía aseguradora"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,help:automocion_rivera_insurance_fsm.field_fsm_order__insurance_partner_id
+#: model:ir.model.fields,help:automocion_rivera_insurance_fsm.field_sale_order__insurance_partner_id
+msgid "Compañía aseguradora que cubrirá parte del presupuesto"
+msgstr "Compañía aseguradora que cubrirá parte del presupuesto"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,field_description:automocion_rivera_insurance_fsm.field_fsm_order__franchise_amount
+#: model:ir.model.fields,field_description:automocion_rivera_insurance_fsm.field_sale_order__franchise_amount
+msgid "Importe franquicia"
+msgstr "Importe franquicia"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,help:automocion_rivera_insurance_fsm.field_fsm_order__franchise_amount
+#: model:ir.model.fields,help:automocion_rivera_insurance_fsm.field_sale_order__franchise_amount
+msgid "Importe que paga el cliente en concepto de franquicia. El resto será facturado a la aseguradora."
+msgstr "Importe que paga el cliente en concepto de franquicia. El resto será facturado a la aseguradora."
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/fsm_order.py:0
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "El importe de la franquicia no puede ser negativo."
+msgstr "El importe de la franquicia no puede ser negativo."
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "El importe de la franquicia (%.2f) no puede ser mayor que el total del pedido (%.2f)."
+msgstr "El importe de la franquicia (%.2f) no puede ser mayor que el total del pedido (%.2f)."
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,field_description:automocion_rivera_insurance_fsm.field_sale_order__has_insurance_split
+msgid "Facturación dividida"
+msgstr "Facturación dividida"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,help:automocion_rivera_insurance_fsm.field_sale_order__has_insurance_split
+msgid "Indica si este pedido se facturará dividido entre cliente y aseguradora"
+msgstr "Indica si este pedido se facturará dividido entre cliente y aseguradora"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:product.product,name:automocion_rivera_insurance_fsm.product_franchise
+msgid "Franquicia seguro"
+msgstr "Franquicia seguro"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:product.product,description:automocion_rivera_insurance_fsm.product_franchise
+msgid "Importe de franquicia abonado por el cliente en servicios cubiertos por seguro"
+msgstr "Importe de franquicia abonado por el cliente en servicios cubiertos por seguro"
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "No se encontró el producto 'Franquicia seguro'. Por favor, reinstale el módulo automocion_rivera_insurance_fsm."
+msgstr "No se encontró el producto 'Franquicia seguro'. Por favor, reinstale el módulo automocion_rivera_insurance_fsm."
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "Franquicia - %s"
+msgstr "Franquicia - %s"
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "Aseguradora - %s"
+msgstr "Aseguradora - %s"
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "Descuento franquicia abonada por cliente"
+msgstr "Descuento franquicia abonada por cliente"
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "Factura de franquicia creada: %s (%.2f %s). Pedido de venta: %s"
+msgstr "Factura de franquicia creada: %s (%.2f %s). Pedido de venta: %s"
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "Factura a aseguradora creada: %s (%.2f %s). Pedido de venta: %s"
+msgstr "Factura a aseguradora creada: %s (%.2f %s). Pedido de venta: %s"
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "Factura de franquicia del pedido %s"
+msgstr "Factura de franquicia del pedido %s"
+
+#. module: automocion_rivera_insurance_fsm
+#: code:addons/automocion_rivera_insurance_fsm/models/sale_order.py:0
+msgid "Factura a aseguradora del pedido %s. Resto tras descontar franquicia de %.2f %s."
+msgstr "Factura a aseguradora del pedido %s. Resto tras descontar franquicia de %.2f %s."
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_order_form_insurance
+msgid "Seguro"
+msgstr "Seguro"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_order_form_insurance
+msgid "Facturación dividida:"
+msgstr "Facturación dividida:"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_order_form_insurance
+msgid "Este pedido se facturará en dos partes:"
+msgstr "Este pedido se facturará en dos partes:"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_order_form_insurance
+msgid "Una factura al cliente por la franquicia"
+msgstr "Una factura al cliente por la franquicia"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_order_form_insurance
+msgid "Una factura a la aseguradora por el resto"
+msgstr "Una factura a la aseguradora por el resto"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_order_form_insurance
+msgid "Facturación"
+msgstr "Facturación"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_order_form_insurance
+msgid "Dividida"
+msgstr "Dividida"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_fsm_order_search_insurance
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_sales_order_filter_insurance
+msgid "Con Seguro"
+msgstr "Con Seguro"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_sales_order_filter_insurance
+msgid "Facturación Dividida"
+msgstr "Facturación Dividida"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_fsm_order_search_insurance
+#: model:ir.ui.view,arch_db:automocion_rivera_insurance_fsm.view_sales_order_filter_insurance
+msgid "Aseguradora"
+msgstr "Aseguradora"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model.fields,field_description:automocion_rivera_insurance_fsm.field_fsm_order__currency_id
+msgid "Moneda"
+msgstr "Moneda"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model,name:automocion_rivera_insurance_fsm.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model,name:automocion_rivera_insurance_fsm.model_fsm_order
+msgid "Orden de Trabajo"
+msgstr "Orden de Trabajo"
+
+#. module: automocion_rivera_insurance_fsm
+#: model:ir.model,name:automocion_rivera_insurance_fsm.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de Venta"
+# Copyright 2025 Xtendoo Software SLU
+# License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0)
+
+from odoo.tests.common import TransactionCase
+from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
+
+
+class TestInsuranceFSM(TransactionCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        # Crear compañía de prueba
+        cls.company = cls.env.company
+        cls.currency = cls.company.currency_id
+
+        # Crear contactos
+        cls.customer = cls.env['res.partner'].create({
+            'name': 'Cliente Test',
+            'is_insurance': False,
+        })
+
+        cls.insurance = cls.env['res.partner'].create({
+            'name': 'Aseguradora Test',
+            'is_insurance': True,
+        })
+
+        # Crear empleado/técnico
+        cls.employee = cls.env['hr.employee'].create({
+            'name': 'Técnico Test',
+        })
+
+        # Crear etapa FSM
+        cls.stage = cls.env['fsm.stage'].search([], limit=1)
+        if not cls.stage:
+            cls.stage = cls.env['fsm.stage'].create({
+                'name': 'Nueva',
+                'code': 'new',
+            })
+
+        # Obtener producto de franquicia
+        cls.franchise_product = cls.env.ref(
+            'automocion_rivera_insurance_fsm.product_franchise'
+        )
+
+        # Crear producto de servicio para pruebas
+        cls.service_product = cls.env['product.product'].create({
+            'name': 'Servicio Test',
+            'type': 'service',
+            'list_price': 100.0,
+            'invoice_policy': 'order',
+        })
+
+        # Obtener impuesto por defecto
+        cls.tax = cls.env['account.tax'].search([
+            ('type_tax_use', '=', 'sale'),
+            ('company_id', '=', cls.company.id),
+        ], limit=1)
+
+        if not cls.tax:
+            cls.tax = cls.env['account.tax'].create({
+                'name': 'IVA 21% Test',
+                'amount': 21.0,
+                'amount_type': 'percent',
+                'type_tax_use': 'sale',
+                'company_id': cls.company.id,
+            })
+
+        cls.service_product.taxes_id = [(6, 0, [cls.tax.id])]
+
+    def test_01_partner_is_insurance(self):
+        """Test que el campo is_insurance funciona correctamente"""
+        self.assertTrue(self.insurance.is_insurance)
+        self.assertFalse(self.customer.is_insurance)
+
+    def test_02_fsm_order_insurance_fields(self):
+        """Test campos de seguro en orden FSM"""
+        fsm_order = self.env['fsm.order'].create({
+            'partner_id': self.customer.id,
+            'description': 'Reparación test',
+            'stage_id': self.stage.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 50.0,
+        })
+
+        self.assertEqual(fsm_order.insurance_partner_id, self.insurance)
+        self.assertEqual(fsm_order.franchise_amount, 50.0)
+
+    def test_03_fsm_franchise_negative_constraint(self):
+        """Test que no se puede poner franquicia negativa en FSM"""
+        with self.assertRaises(ValidationError):
+            self.env['fsm.order'].create({
+                'partner_id': self.customer.id,
+                'description': 'Reparación test',
+                'stage_id': self.stage.id,
+                'insurance_partner_id': self.insurance.id,
+                'franchise_amount': -10.0,
+            })
+
+    def test_04_fsm_to_sale_order_propagation(self):
+        """Test que los campos de seguro se propagan de FSM a pedido"""
+        fsm_order = self.env['fsm.order'].create({
+            'partner_id': self.customer.id,
+            'description': 'Reparación test',
+            'stage_id': self.stage.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 50.0,
+        })
+
+        # Crear pedido desde FSM
+        action = fsm_order.action_create_sale_order()
+        sale_order = self.env['sale.order'].browse(action['res_id'])
+
+        self.assertEqual(sale_order.insurance_partner_id, self.insurance)
+        self.assertEqual(sale_order.franchise_amount, 50.0)
+        self.assertTrue(sale_order.has_insurance_split)
+
+    def test_05_sale_order_has_insurance_split(self):
+        """Test cálculo de has_insurance_split"""
+        # Sin seguro ni franquicia
+        so1 = self.env['sale.order'].create({
+            'partner_id': self.customer.id,
+        })
+        self.assertFalse(so1.has_insurance_split)
+
+        # Con seguro pero sin franquicia
+        so2 = self.env['sale.order'].create({
+            'partner_id': self.customer.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 0.0,
+        })
+        self.assertFalse(so2.has_insurance_split)
+
+        # Con seguro y franquicia
+        so3 = self.env['sale.order'].create({
+            'partner_id': self.customer.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 50.0,
+        })
+        self.assertTrue(so3.has_insurance_split)
+
+    def test_06_franchise_amount_constraints(self):
+        """Test validaciones de franchise_amount en pedido"""
+        # Franquicia negativa
+        with self.assertRaises(ValidationError):
+            self.env['sale.order'].create({
+                'partner_id': self.customer.id,
+                'insurance_partner_id': self.insurance.id,
+                'franchise_amount': -10.0,
+            })
+
+    def test_07_invoice_split_basic(self):
+        """Test básico de split de facturación"""
+        # Crear pedido con línea
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.customer.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 60.5,  # 50 + 21% IVA = 60.5
+            'order_line': [(0, 0, {
+                'product_id': self.service_product.id,
+                'product_uom_qty': 1,
+                'price_unit': 100.0,
+                'tax_id': [(6, 0, [self.tax.id])],
+            })],
+        })
+
+        sale_order.action_confirm()
+
+        # Crear facturas
+        invoices = sale_order._create_invoices()
+
+        # Debe haber 2 facturas
+        self.assertEqual(len(invoices), 2)
+
+        # Una para el cliente, otra para la aseguradora
+        customer_invoice = invoices.filtered(
+            lambda i: i.partner_id == self.customer
+        )
+        insurance_invoice = invoices.filtered(
+            lambda i: i.partner_id == self.insurance
+        )
+
+        self.assertEqual(len(customer_invoice), 1)
+        self.assertEqual(len(insurance_invoice), 1)
+
+        # La factura del cliente debe tener 1 línea de franquicia
+        self.assertEqual(len(customer_invoice.invoice_line_ids), 1)
+        self.assertEqual(
+            customer_invoice.invoice_line_ids[0].product_id,
+            self.franchise_product
+        )
+
+        # La factura de la aseguradora debe tener 2 líneas
+        # (producto + línea negativa de franquicia)
+        self.assertEqual(len(insurance_invoice.invoice_line_ids), 2)
+
+        # Validar totales
+        precision = self.currency.decimal_places
+        total_so = sale_order.amount_total
+        total_customer = customer_invoice.amount_total
+        total_insurance = insurance_invoice.amount_total
+
+        # La suma de ambas facturas debe ser igual al total del pedido
+        total_invoices = total_customer + total_insurance
+        self.assertEqual(
+            float_compare(total_invoices, total_so, precision_digits=precision),
+            0,
+            "La suma de las facturas debe coincidir con el total del pedido"
+        )
+
+    def test_08_invoice_split_with_multiple_lines(self):
+        """Test split con múltiples líneas de pedido"""
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.customer.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 60.5,
+            'order_line': [
+                (0, 0, {
+                    'product_id': self.service_product.id,
+                    'product_uom_qty': 2,
+                    'price_unit': 100.0,
+                    'tax_id': [(6, 0, [self.tax.id])],
+                }),
+                (0, 0, {
+                    'product_id': self.service_product.id,
+                    'product_uom_qty': 1,
+                    'price_unit': 50.0,
+                    'tax_id': [(6, 0, [self.tax.id])],
+                }),
+            ],
+        })
+
+        sale_order.action_confirm()
+        invoices = sale_order._create_invoices()
+
+        self.assertEqual(len(invoices), 2)
+
+        # Validar totales
+        precision = self.currency.decimal_places
+        total_so = sale_order.amount_total
+        total_invoices = sum(invoices.mapped('amount_total'))
+
+        self.assertEqual(
+            float_compare(total_invoices, total_so, precision_digits=precision),
+            0
+        )
+
+    def test_09_invoice_without_insurance(self):
+        """Test que pedidos sin seguro se facturan normalmente"""
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.customer.id,
+            'order_line': [(0, 0, {
+                'product_id': self.service_product.id,
+                'product_uom_qty': 1,
+                'price_unit': 100.0,
+                'tax_id': [(6, 0, [self.tax.id])],
+            })],
+        })
+
+        sale_order.action_confirm()
+        invoices = sale_order._create_invoices()
+
+        # Solo debe haber 1 factura
+        self.assertEqual(len(invoices), 1)
+        self.assertEqual(invoices.partner_id, self.customer)
+
+    def test_10_franchise_vs_total_validation(self):
+        """Test que la franquicia no puede superar el total"""
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.customer.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 50.0,
+            'order_line': [(0, 0, {
+                'product_id': self.service_product.id,
+                'product_uom_qty': 1,
+                'price_unit': 100.0,
+                'tax_id': [(6, 0, [self.tax.id])],
+            })],
+        })
+
+        sale_order.action_confirm()
+
+        # Intentar poner franquicia mayor al total
+        with self.assertRaises(ValidationError):
+            sale_order.write({'franchise_amount': 200.0})
+
+    def test_11_invoice_split_with_tax_included(self):
+        """Test split con impuestos incluidos en el precio"""
+        # Crear impuesto incluido
+        tax_included = self.env['account.tax'].create({
+            'name': 'IVA 21% Incluido',
+            'amount': 21.0,
+            'amount_type': 'percent',
+            'type_tax_use': 'sale',
+            'price_include': True,
+            'company_id': self.company.id,
+        })
+
+        product = self.env['product.product'].create({
+            'name': 'Servicio con IVA incluido',
+            'type': 'service',
+            'list_price': 121.0,  # 100 + 21% IVA
+            'taxes_id': [(6, 0, [tax_included.id])],
+        })
+
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.customer.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 60.5,
+            'order_line': [(0, 0, {
+                'product_id': product.id,
+                'product_uom_qty': 1,
+                'price_unit': 121.0,
+                'tax_id': [(6, 0, [tax_included.id])],
+            })],
+        })
+
+        sale_order.action_confirm()
+        invoices = sale_order._create_invoices()
+
+        self.assertEqual(len(invoices), 2)
+
+        # Validar totales
+        precision = self.currency.decimal_places
+        total_so = sale_order.amount_total
+        total_invoices = sum(invoices.mapped('amount_total'))
+
+        self.assertEqual(
+            float_compare(total_invoices, total_so, precision_digits=precision),
+            0
+        )
+
+    def test_12_multicompany(self):
+        """Test básico multi-compañía"""
+        # Crear nueva compañía
+        company2 = self.env['res.company'].create({
+            'name': 'Compañía Test 2',
+        })
+
+        # Crear pedido en compañía 2
+        sale_order = self.env['sale.order'].with_company(company2).create({
+            'partner_id': self.customer.id,
+            'insurance_partner_id': self.insurance.id,
+            'franchise_amount': 60.5,
+            'company_id': company2.id,
+            'order_line': [(0, 0, {
+                'product_id': self.service_product.id,
+                'product_uom_qty': 1,
+                'price_unit': 100.0,
+            })],
+        })
+
+        self.assertEqual(sale_order.company_id, company2)
+        self.assertTrue(sale_order.has_insurance_split)
+
