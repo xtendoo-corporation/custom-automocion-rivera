@@ -101,25 +101,23 @@ class SaleOrder(models.Model):
     def _create_invoices(self, grouped=False, final=False, date=None):
         """
         Override para crear facturas divididas cuando hay aseguradora y franquicia.
-
         Si el pedido tiene insurance_partner_id y franchise_amount > 0:
-        - Crea una factura al cliente por el importe de la franquicia
-        - Crea una factura a la aseguradora por el resto del presupuesto
+        - Crea dos facturas personalizadas (cliente y aseguradora)
+        Si no, llama al proceso estándar
         """
-        # Separar pedidos con y sin seguro
         orders_with_insurance = self.filtered('has_insurance_split')
         orders_without_insurance = self - orders_with_insurance
 
-        # Procesar pedidos sin seguro de forma estándar
-        invoices = super(SaleOrder, orders_without_insurance)._create_invoices(
-            grouped=grouped, final=final, date=date
-        )
-
-        # Procesar pedidos con seguro de forma especial
+        invoices = self.env['account.move']
+        # Procesar pedidos con seguro y franquicia
         for order in orders_with_insurance:
             invoice_pair = order._create_insurance_split_invoices(date=date)
             invoices |= invoice_pair
-
+        # Procesar pedidos normales con el proceso estándar
+        if orders_without_insurance:
+            invoices |= super(SaleOrder, orders_without_insurance)._create_invoices(
+                grouped=grouped, final=final
+            )
         return invoices
 
     def _create_insurance_split_invoices(self, date=None):
@@ -189,26 +187,21 @@ class SaleOrder(models.Model):
         return customer_invoice | insurance_invoice
 
     def _create_franchise_invoice(self, franchise_product, date=None):
-        """Crea la factura al cliente con una línea de franquicia"""
+        """Crea la factura al cliente SOLO con la línea de franquicia"""
         self.ensure_one()
 
-        # Preparar valores base de la factura
         invoice_vals = self._prepare_invoice()
         if date:
             invoice_vals['invoice_date'] = date
-
         invoice_vals['ref'] = _("Franquicia - %s") % self.name
         invoice_vals['move_type'] = 'out_invoice'
 
-        # Obtener impuestos para el producto franquicia según fiscal position
         taxes = franchise_product.taxes_id
         if self.fiscal_position_id:
             taxes = self.fiscal_position_id.map_tax(taxes)
-
-        # Precio unitario (asumimos que franchise_amount NO incluye impuestos)
         price_unit = self.franchise_amount
 
-        # Crear línea de factura para la franquicia
+        # SOLO incluir la línea de franquicia
         invoice_line_vals = {
             'product_id': franchise_product.id,
             'name': franchise_product.display_name or _("Franquicia seguro"),
@@ -216,7 +209,6 @@ class SaleOrder(models.Model):
             'price_unit': price_unit,
             'tax_ids': [(6, 0, taxes.ids)] if taxes else False,
         }
-
         invoice_vals['invoice_line_ids'] = [(0, 0, invoice_line_vals)]
 
         # Crear la factura
@@ -230,48 +222,37 @@ class SaleOrder(models.Model):
     def _create_insurance_invoice(self, franchise_product, date=None):
         """
         Crea la factura a la aseguradora con:
-        - Todas las líneas del pedido
+        - Solo las líneas facturables (policy 'order' o entregadas)
         - Una línea negativa de franquicia para ajustar el total
         """
         self.ensure_one()
 
-        # Preparar valores base de la factura a la aseguradora
         invoice_vals = self._prepare_invoice()
         invoice_vals['partner_id'] = self.insurance_partner_id.id
         invoice_vals['move_type'] = 'out_invoice'
 
-        # Actualizar fiscal position para la aseguradora
-        fiscal_position = self.env['account.fiscal.position'].with_company(
-            self.company_id
-        ).get_fiscal_position(self.insurance_partner_id.id)
-
+        # Obtener la posición fiscal del partner aseguradora
+        fiscal_position = self.insurance_partner_id.property_account_position_id
         if fiscal_position:
-            invoice_vals['fiscal_position_id'] = fiscal_position
-
+            invoice_vals['fiscal_position_id'] = fiscal_position.id
         if date:
             invoice_vals['invoice_date'] = date
-
         invoice_vals['ref'] = _("Aseguradora - %s") % self.name
 
-        # Crear líneas de factura desde las líneas del pedido
         invoice_line_vals_list = []
         for line in self.order_line:
             if line.display_type:
                 continue
+            policy = line.product_id.invoice_policy
+            if policy == 'order' or (policy == 'delivered' and line.qty_delivered > 0):
+                line_vals = line._prepare_invoice_line()
+                if line_vals:
+                    invoice_line_vals_list.append((0, 0, line_vals))
 
-            line_vals = line._prepare_invoice_line()
-            if line_vals:
-                invoice_line_vals_list.append((0, 0, line_vals))
-
-        # Añadir línea negativa de franquicia
         taxes = franchise_product.taxes_id
-        fiscal_position_obj = self.env['account.fiscal.position'].browse(fiscal_position) if fiscal_position else False
-        if fiscal_position_obj:
-            taxes = fiscal_position_obj.map_tax(taxes)
-
-        # Precio unitario negativo
+        if fiscal_position:
+            taxes = fiscal_position.map_tax(taxes)
         price_unit = -self.franchise_amount
-
         franchise_line_vals = {
             'product_id': franchise_product.id,
             'name': _("Descuento franquicia abonada por cliente"),
@@ -279,15 +260,33 @@ class SaleOrder(models.Model):
             'price_unit': price_unit,
             'tax_ids': [(6, 0, taxes.ids)] if taxes else False,
         }
-
         invoice_line_vals_list.append((0, 0, franchise_line_vals))
         invoice_vals['invoice_line_ids'] = invoice_line_vals_list
 
-        # Crear la factura
         invoice = self.env['account.move'].sudo().create(invoice_vals)
-
-        # Vincular con el pedido
         self.invoice_ids |= invoice
-
         return invoice
 
+    def action_create_fsm_order(self):
+        """
+        Crea una orden de trabajo (FSM) desde la orden de venta y transfiere los campos
+        'insurance_partner_id' y 'franchise_amount'.
+        """
+        self.ensure_one()
+        fsm_order = self.env['fsm.order'].create({
+            'partner_id': self.partner_id.id,
+            'sale_order_id': self.id,
+            'insurance_partner_id': self.insurance_partner_id.id,
+            'franchise_amount': self.franchise_amount,
+            'company_id': self.company_id.id,
+            'currency_id': self.currency_id.id,
+            'origin': self.name,
+        })
+        self.message_post(body=_("Orden de trabajo creada: %s") % fsm_order.name)
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'fsm.order',
+            'res_id': fsm_order.id,
+            'view_mode': 'form',
+            'target': 'current',
+        }

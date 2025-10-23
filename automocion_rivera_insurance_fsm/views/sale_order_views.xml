@@ -53,6 +53,12 @@
                     </div>
                 </button>
             </xpath>
+
+            <!-- Mover campos a la ubicación deseada -->
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="insurance_partner_id"/>
+                <field name="franchise_amount"/>
+            </xpath>
         </field>
     </record>
 
@@ -90,4 +96,3 @@
         </field>
     </record>
 </odoo>
-
