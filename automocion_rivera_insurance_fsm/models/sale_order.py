@@ -28,6 +28,7 @@ class SaleOrder(models.Model):
     has_insurance_split = fields.Boolean(
         string="Facturación dividida",
         compute='_compute_has_insurance_split',
+        store=True,
         help="Indica si este pedido se facturará dividido entre cliente y aseguradora"
     )
 
